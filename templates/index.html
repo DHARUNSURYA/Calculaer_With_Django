@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="{% static '/css/calc.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator-container {
+            width: 500px; /* Increased width */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result {
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .keypad button {
+            width: 23%; /* Adjusted width */
+            padding: 10px;
+            margin: 5px;
+        }
+
+        .header {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator-container">
+        <div class="header">
+            Calculator
+        </div>
+        <form class="" action="calculation" method="post">
+            {% csrf_token %}
+            <div class="result">
+                <span id="ques">{{values}}</span>
+                <input type="text" name="values" id="result" class="form-control" placeholder="0" value={{result}}>
+            </div>
+            <div class="keypad">
+                <div class="row">
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue('(');">(</button>
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue(')');">)</button>
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue('%');">%</button>
+                    <button type="button" class="btn btn-danger" onclick="insertTextInInputValue('AC');">AC</button>
+                </div>
+                <div class="row">
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue(7);">7</button>
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue(8);">8</button>
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue(9);">9</button>
+                    <button type="button" class="btn btn-info" onclick="insertTextInInputValue('/');">/</button>
+                </div>
+                <div class="row">
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue(4);">4</button>
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue(5);">5</button>
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue(6);">6</button>
+                    <button type="button" class="btn btn-info" onclick="insertTextInInputValue('*');">*</button>
+                </div>
+                <div class="row">
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue(1);">1</button>
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue(2);">2</button>
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue(3);">3</button>
+                    <button type="button" class="btn btn-info" onclick="insertTextInInputValue('-');">-</button>
+                </div>
+                <div class="row">
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue(0);">0</button>
+                    <button type="button" class="btn btn-light" onclick="insertTextInInputValue('.');">.</button>
+                    <button type="submit" class="btn btn-success">=</button>
+                    <button type="button" class="btn btn-info" onclick="insertTextInInputValue('+');">+</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        function insertTextInInputValue(buttonValueIs) {
+            if (buttonValueIs == "AC") {
+                $('#ques').text('Ans : 0');
+                $('#result').val(0);
+            } else {
+                var inputElementIs = document.getElementById("result");
+                inputElementIs.value = inputElementIs.value + buttonValueIs;
+                $('#result').val(inputElementIs.value);
+            }
+        }
+    </script>
+</body>
+
+</html>
