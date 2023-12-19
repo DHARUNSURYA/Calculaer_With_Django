@@ -12,7 +12,7 @@ def calculation(request):
         print(values)
         vals=re.findall(r"(\d+)",values) #extrect values that means it get only value with our operators using re.findall()['03','3','3']
         print(vals)
-        operators=['+','x','÷','-','.','%']
+        operators=['+','*','/','-','.','%']
         opr=[]
         for v in values:  # to get operatro value
             for o in operators:
@@ -40,7 +40,7 @@ def calculation(request):
                 print(vals)
                 print(opr)
         for o in opr:
-            if o=='÷':
+            if o=='/':
                 i=opr.index(o)
                 res=float(vals[i])/float(vals[i+1])
                 vals.remove(vals[i+1])
@@ -49,7 +49,7 @@ def calculation(request):
                 print(vals)
                 print(opr)
         for o in opr:
-            if o=='x':
+            if o=='*':
                 i=opr.index(o)
                 res=float(vals[i])*float(vals[i+1])
                 vals.remove(vals[i+1])
